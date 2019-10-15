@@ -1,5 +1,6 @@
 package com.example.fibonacci;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Runner {
@@ -7,9 +8,12 @@ class Runner {
     public static void main(String[] args) {
         System.out.println("укажите размер массива >2:");
         Scanner in = new Scanner(System.in);
-        int size = in.nextInt();
+
         try {
-            if (size < 3) throw new Exception("Размер массива <3!");
+            int size = in.nextInt();
+            if (size < 3) {
+                throw new MyArrayException("Размер массива <3!");
+            }
             MyArray a = new MyArray(size);
             System.out.println("выберите способ заполнения массива:");
             System.out.println("1-ввод");
@@ -18,9 +22,13 @@ class Runner {
             int x = in.nextInt();
             switch (x) {
                 case 1:
-                    a.inputMyArray();
-                    System.out.println(a.toString());
-                    break;
+                    try {
+                        a.inputMyArray();
+                        System.out.println(a.toString());
+                        break;
+                    } catch (InputMismatchException e) {
+                        System.out.println("ошибка ввода массива!");
+                    }
                 case 2:
                     a.randomMyArray();
                     System.out.println(a.toString());
@@ -31,14 +39,11 @@ class Runner {
                     break;
                 default:
                     System.out.println("нет такой операции");
-                    in.close();
-                    return;
             }
-        } catch (Exception e) {
+        } catch (MyArrayException e) {
             System.out.println(e.getMessage());
-        } finally {
-            in.close();
+        } catch (InputMismatchException e) {
+            System.out.println("введено не целое число!");
         }
-
     }
 }
