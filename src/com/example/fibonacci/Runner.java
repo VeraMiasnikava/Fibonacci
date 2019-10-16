@@ -7,9 +7,7 @@ class Runner {
 
     public static void main(String[] args) {
         System.out.println("укажите размер массива >2:");
-        Scanner in = new Scanner(System.in);
-
-        try {
+        try (Scanner in = new Scanner(System.in)) {
             int size = in.nextInt();
             if (size < 3) {
                 throw new MyArrayException("Размер массива <3!");
@@ -22,13 +20,9 @@ class Runner {
             int x = in.nextInt();
             switch (x) {
                 case 1:
-                    try {
-                        a.inputMyArray();
+                    if (a.inputMyArray())
                         System.out.println(a.toString());
-                        break;
-                    } catch (InputMismatchException e) {
-                        System.out.println("ошибка ввода массива!");
-                    }
+                    break;
                 case 2:
                     a.randomMyArray();
                     System.out.println(a.toString());

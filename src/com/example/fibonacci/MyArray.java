@@ -14,14 +14,19 @@ class MyArray {
         a = new int[size];
     }
 
-    void inputMyArray() throws InputMismatchException {
-        Scanner in = new Scanner(System.in);
+    boolean inputMyArray() {
         System.out.println("введите элементы массива:");
-        for (int i = 0; i < size; i++) {
-            int x = in.nextInt();
-            a[i] = x;
+        try (Scanner in = new Scanner(System.in)) {
+            for (int i = 0; i < size; i++) {
+                int x = in.nextInt();
+                a[i] = x;
+            }
+            return true;
+        } catch (InputMismatchException e) {
+            System.out.println("введено не целое число!");
+            System.out.println("ошибка ввода массива!");
+            return false;
         }
-        in.close();
     }
 
     void randomMyArray() {
